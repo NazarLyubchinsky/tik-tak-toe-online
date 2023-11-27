@@ -4,10 +4,9 @@ import { UiButton } from "../uikit/UiButton";
 import { GameSymbol } from "./GameSymbol";
 import { useGameState } from "./UseGameState";
 
+export function GameField({ className, playersCount }) {
 
-export function GameField({ className }) {
-
-	const { cells, currentMove, handleCellClick, nextMove } = useGameState();
+	const { cells, currentMove, handleCellClick, nextMove } = useGameState(playersCount);
 
 	const actions = (
 		<>
@@ -27,7 +26,7 @@ export function GameField({ className }) {
 				nextMove={nextMove}
 			/>
 			<GameGrid>
-				{cells.map((symbol, index) =>  (
+				{cells.map((symbol, index) => (
 					<GameCell
 						key={index}
 						onClick={() => {

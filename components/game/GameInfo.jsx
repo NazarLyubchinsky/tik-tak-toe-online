@@ -41,7 +41,11 @@ const players = [
 	},
 ];
 
-export function GameInfo({ className, playersCount, currentMove }) {
+export function GameInfo({
+	className, playersCount,
+	currentMove, isWinner
+}) {
+
 	return (
 		<div
 			className={clsx(
@@ -54,7 +58,7 @@ export function GameInfo({ className, playersCount, currentMove }) {
 					key={player.id}
 					playerInfo={player}
 					isRight={index % 2 === 1}
-					isTimerRunning={currentMove === player.symbol}
+					isTimerRunning={currentMove === player.symbol && !isWinner}
 				/>
 			))}
 		</div>
@@ -83,12 +87,12 @@ function PlayerInfo({ playerInfo, isRight, isTimerRunning }) {
 		}
 	}, [isTimerRunning]);
 
-const getTimerColor = ()=>{
-	if (isTimerRunning) {
-		return isDanger ?  'text-orange-600' : 'text-slate-900'
+	const getTimerColor = () => {
+		if (isTimerRunning) {
+			return isDanger ? 'text-orange-600' : 'text-slate-900'
+		}
+		return "text-slate-200"
 	}
-	return "text-slate-200"
-}
 
 	return (
 		<div className="flex gap-3 items-center">

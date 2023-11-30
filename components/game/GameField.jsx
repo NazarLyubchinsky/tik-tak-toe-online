@@ -3,9 +3,10 @@ import { UiButton } from "../uikit/UiButton";
 
 import { GameSymbol } from "./GameSymbol";
 
-	export function GameField({ className, cells, currentMove, handleCellClick, nextMove,winnerSequence }) {
-
-
+export function GameField({
+	className, cells, currentMove,
+	handleCellClick, nextMove, winnerSequence,
+	winnerSymbol }) {
 	const actions = (
 		<>
 			<UiButton size="md" variant="primary">
@@ -28,6 +29,7 @@ import { GameSymbol } from "./GameSymbol";
 					<GameCell
 						key={index}
 						isWinner={winnerSequence?.includes(index)}
+						disable={!!winnerSymbol}
 						onClick={() => {
 							handleCellClick(index);
 						}}
@@ -77,9 +79,10 @@ function GameGrid({ children }) {
 }
 
 
-function GameCell({ children, onClick, isWinner }) {
+function GameCell({ children, onClick, isWinner, disable }) {
 	return (
 		<button
+			disabled={disable}
 			onClick={onClick}
 			className={clsx(
 				"border border-slate-200 -ml-px -mt-px flex items-center justify-center",

@@ -9,7 +9,6 @@ export function getNextMove(currentMove, playersCount) {
 
 export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 	const gap = Math.floor(sequenceSize / 2);
-
 	function compareElements(indexes) {
 		let result = true;
 
@@ -36,6 +35,14 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 			res[3].push(fieldSize * (j - gap) + i);
 		}
 
+		const x = i % fieldSize;
+		console.log(x)
+		if (x < gap || x >= fieldSize - gap) {
+			res.shift()
+			res.shift()
+			res.shift()
+		}
+
 		return res;
 	}
 
@@ -44,7 +51,6 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 			const indexRows = getSequenceIndexes(i);
 
 			const winnerIndexes = indexRows.find((row) => compareElements(row));
-
 			if (winnerIndexes) {
 				return winnerIndexes;
 			}

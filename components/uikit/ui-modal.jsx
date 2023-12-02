@@ -1,5 +1,7 @@
 import clsx from "clsx";
 
+import { createPortal } from "react-dom";
+
 /**
  * @param {{
  * className: string,
@@ -10,7 +12,7 @@ import clsx from "clsx";
  * @returns 
  */
 
-export function UiModal({ width = 'md', className, children, isOpen = true, onClose }) {
+export function UiModal({ width = 'md', className, children, isOpen = false, onClose }) {
 
 	const handleClick = (e) => {
 		const inModal = e.target.closest("[data-id=modal]");
@@ -21,31 +23,34 @@ export function UiModal({ width = 'md', className, children, isOpen = true, onCl
 	if (!isOpen) {
 		return null;
 	}
+	const modal = (
 
-	return <div
-		onClick={handleClick}
-		className={clsx(
-			"fixed inset-0 bg-slate-900/60 backdrop-blur overflow-y-auto",
-			className)}>
 		<div
-			data-id='modal'
+			onClick={handleClick}
 			className={clsx(
-				'bg-white rounded-lg min-h-[320px] mx-auto relative',
-				"flex flex-col",
-				{
-					md: 'max-w-[640px] w-full',
-					full: 'mx-5'
-				}[width]
-			)}>
-			<button onClick={onClose}
-				className="w-8 h-8 flex items-center justify-center
+				"fixed inset-0 bg-slate-900/60 backdrop-blur overflow-y-auto",
+				className)}>
+			<div
+				data-id='modal'
+				className={clsx(
+					'bg-white rounded-lg min-h-[320px] mx-auto relative',
+					"flex flex-col",
+					{
+						md: 'max-w-[640px] w-full',
+						full: 'mx-5'
+					}[width]
+				)}>
+				<button onClick={onClose}
+					className="w-8 h-8 flex items-center justify-center
 			 bg-white/10 absolute top-0 left-[calc(100%+12px)] 
 			   rounded hover:bg-white/40 transition-colors">
-				<CrossLightIcon className='w-4 h-4 text-white' />
-			</button>
-			{children}
+					<CrossLightIcon className='w-4 h-4 text-white' />
+				</button>
+				{children}
+			</div>
 		</div>
-	</div>
+	)
+	return createPortal(modal, document.getElementById("modals"));
 }
 
 UiModal.Header = function UiModalHeader({ children, className }) {

@@ -2,7 +2,7 @@ import Image from "next/image";
 import logoSrc from "./logo.svg";
 import { Profile } from "../profile";
 import { ArrowDownIcon } from "./icons/arrow-down-icon";
-import { UiButton } from "../uikit/UiButton";
+import { UiButton } from "../uikit/ui-button";
 
 export function Header() {
 	return (

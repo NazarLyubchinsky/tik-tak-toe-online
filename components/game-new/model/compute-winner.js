@@ -1,14 +1,7 @@
-import { MOVE_ORDER } from "./constants";
-
-export function getNextMove(currentMove, playersCount) {
-	const slicedMoveOrder = MOVE_ORDER.slice(0, playersCount);
-
-	const nextMoveIndex = slicedMoveOrder.indexOf(currentMove) + 1;
-	return slicedMoveOrder[nextMoveIndex] ?? slicedMoveOrder[0];
-}
-
-export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
+export function computeWinner(gameState, sequenceSize = 5, fieldSize = 19) {
+	const cells = gameState.cells;
 	const gap = Math.floor(sequenceSize / 2);
+
 	function compareElements(indexes) {
 		let result = true;
 
@@ -22,9 +15,9 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 
 	function getSequenceIndexes(i) {
 		const res = [
-			[], // -
-			[], // \
-			[], // /
+			[],
+			[],
+			[],
 			[], // |
 		];
 
@@ -36,11 +29,10 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 		}
 
 		const x = i % fieldSize;
-		console.log(x)
 		if (x < gap || x >= fieldSize - gap) {
-			res.shift()
-			res.shift()
-			res.shift()
+			res.shift();
+			res.shift();
+			res.shift();
 		}
 
 		return res;
@@ -51,6 +43,7 @@ export function computeWinner(cells, sequenceSize = 5, fieldSize = 19) {
 			const indexRows = getSequenceIndexes(i);
 
 			const winnerIndexes = indexRows.find((row) => compareElements(row));
+
 			if (winnerIndexes) {
 				return winnerIndexes;
 			}
